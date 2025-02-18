@@ -1,110 +1,123 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Выпадающее меню</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выпадающее меню</title>
 </head>
 <body>
 </body>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-// Создаем корневой элемент body
-const body = document.body;
-// Создаем заголовок
-const h1 = document.createElement('h1');
-h1.textContent = 'Каталог товаров';
-body.appendChild(h1);
-// Создаем основное меню
-const menu = document.createElement('ul');
-menu.id = 'menu';
-body.appendChild(menu);
-// Функция для создания вложенных списков
-function createSubMenu(items) {
-const ul = document.createElement('ul');
-ul.style.display = 'none'; // Скрываем вложенные списки по умолчанию
-items.forEach(item => {
-const li = document.createElement('li');
-li.textContent = item.label;
-if (item.children) {
-li.appendChild(createSubMenu(item.children));
-} else if (item.link) {
-const a = document.createElement('a');
-a.href = item.link;
-a.textContent = item.label;
-li.textContent = '';
-li.appendChild(a);
-}
-ul.appendChild(li);
-});
-return ul;
-}
-// Данные для меню
-const menuData = [
-{
-label: 'Книги',
-children: [
-{
-label: 'Отечественные',
-children: [
-{ label: 'Детективы', link: '#' },
-{ label: 'Научная фантастика', link: '#' },
-{ label: 'Исторические', link: '#' }
-]
-},
-{
-label: 'Зарубежные',
-children: [
-{ label: 'Детективы', link: '#' },
-{ label: 'Научная фантастика', link: '#' },
-{ label: 'Исторические', link: '#' }
-]
-}
-]
-},
-{
-label: 'DVD',
-children: [
-{
-label: 'Отечественные',
-children: [
-{ label: 'Детективы', link: '#' },
-{ label: 'Научная фантастика', link: '#' },
-{ label: 'Исторические', link: '#' }
-]
-},
-{
-label: 'Зарубежные',
-children: [
-{ label: 'Детективы', link: '#' },
-{ label: 'Научная фантастика', link: '#' },
-{ label: 'Исторические', link: '#' }
-]
-}
-]
-}
-];
-// Создаем меню на основе данных
-menuData.forEach(item => {
-const li = document.createElement('li');
-li.textContent = item.label;
-if (item.children) {
-li.appendChild(createSubMenu(item.children));
-}
-menu.appendChild(li);
-});
-// Обработчик клика для раскрытия/скрытия подменю
-menu.addEventListener('click', function(event) {
-if (event.target.tagName === 'LI') {
-const subMenu = event.target.querySelector('ul');
-if (subMenu) {
-subMenu.style.display = subMenu.style.display === 'none' ? 'block' : 'none';
-} else if (event.target.querySelector('a')) {
-const link = event.target.querySelector('a');
-window.location.href = link.href;
-}
-}
-});
-});
+    document.addEventListener('DOMContentLoaded', function() {
+        // Создаем корневой элемент body
+        const body = document.body;
+
+        // Создаем заголовок
+        const h1 = document.createElement('h1');
+        h1.textContent = 'Каталог товаров';
+        body.appendChild(h1);
+
+        // Создаем основное меню
+        const menu = document.createElement('ul');
+        menu.id = 'menu';
+        body.appendChild(menu);
+
+        // Функция для создания вложенных списков
+        function createSubMenu(items) {
+            const ul = document.createElement('ul');
+            ul.style.display = 'none'; // Скрываем вложенные списки по умолчанию
+
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.label;
+
+                if (item.children) {
+                    li.appendChild(createSubMenu(item.children));
+                } else if (item.link) {
+                    const a = document.createElement('a');
+                    a.href = item.link;
+                    a.textContent = item.label;
+                    li.textContent = '';
+                    li.appendChild(a);
+                }
+
+                ul.appendChild(li);
+            });
+
+            return ul;
+        }
+
+        // Данные для меню
+        const menuData = [
+            {
+                label: 'Книги',
+                children: [
+                    {
+                        label: 'Отечественные',
+                        children: [
+                            { label: 'Детективы', link: '#' },
+                            { label: 'Научная фантастика', link: '#' },
+                            { label: 'Исторические', link: '#' }
+                        ]
+                    },
+                    {
+                        label: 'Зарубежные',
+                        children: [
+                            { label: 'Детективы', link: '#' },
+                            { label: 'Научная фантастика', link: '#' },
+                            { label: 'Исторические', link: '#' }
+                        ]
+                    }
+                ]
+            },
+            {
+                label: 'DVD',
+                children: [
+                    {
+                        label: 'Отечественные',
+                        children: [
+                            { label: 'Детективы', link: '#' },
+                            { label: 'Научная фантастика', link: '#' },
+                            { label: 'Исторические', link: '#' }
+                        ]
+                    },
+                    {
+                        label: 'Зарубежные',
+                        children: [
+                            { label: 'Детективы', link: '#' },
+                            { label: 'Научная фантастика', link: '#' },
+                            { label: 'Исторические', link: '#' }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        // Создаем меню на основе данных
+        menuData.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.label;
+
+            if (item.children) {
+                li.appendChild(createSubMenu(item.children));
+            }
+
+            menu.appendChild(li);
+        });
+
+        // Обработчик клика для раскрытия/скрытия подменю
+        menu.addEventListener('click', function(event) {
+            if (event.target.tagName === 'LI') {
+                const subMenu = event.target.querySelector('ul');
+
+                if (subMenu) {
+                    subMenu.style.display = subMenu.style.display === 'none' ? 'block' : 'none';
+                } else if (event.target.querySelector('a')) {
+                    const link = event.target.querySelector('a');
+                    window.location.href = link.href;
+                }
+            }
+        });
+    });
 </script>
 </html>
